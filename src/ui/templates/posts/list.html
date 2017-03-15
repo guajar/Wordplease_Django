@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table width="100%" border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Post</th>
+                <th>Title</th>
+                <th>Introduction</th>
+                <th>Article</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in post_objects %}
+                <tr>
+                    <td>
+                        {{ post.title }}
+                    </td>
+                    <td>
+                        {% if post.intro %}
+                            {{ post.intro }}
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if post.body %}
+                            {{ post.body }}
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+                    </td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

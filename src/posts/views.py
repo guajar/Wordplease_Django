@@ -21,6 +21,6 @@ def posts_list(request):
 
     # Devolver la respuesta
     context = {
-        'task_objects': posts
+        'post_objects': posts
     }
     return render(request, 'posts/list.html', context)

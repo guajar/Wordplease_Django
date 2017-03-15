@@ -10,3 +10,6 @@ class Post(models.Model):
     modified_at = models.DateTimeField(auto_now=True)  # Automáticamente actualiza la fecha al guardar
     # Category FK
     # User FK
+
+    def __str__(self):  # como toString() en Java
+        return self.title

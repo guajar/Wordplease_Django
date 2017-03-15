@@ -16,7 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from posts.views import posts_list
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^posts/$', posts_list, name="tasks_list"),
+    url(r'^$', posts_list, name="posts_list"),
 ]
