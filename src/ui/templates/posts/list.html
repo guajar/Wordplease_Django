@@ -3,10 +3,10 @@
     <table width="100%" border="1" cellpadding="10" cellspacing="0">
         <thead>
             <tr>
-                <th>Post</th>
                 <th>Title</th>
                 <th>Introduction</th>
-                <th>Article</th>
+                <th>Created at</th>
+                <th>Author</th>
             </tr>
         </thead>
         <tbody>
@@ -23,11 +23,14 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if post.body %}
-                            {{ post.body }}
+                        {% if post.created_at %}
+                            {{ post.created_at }}
                         {% else %}
                             Unassigned
                         {% endif %}
+                    </td>
+                    <td>
+                        {{ post.owner.first_name }} {{ post.owner.last_name }}
                     </td>
                     <td></td>
                 </tr>

@@ -11,7 +11,7 @@ def posts_list(request):
     """
 
     # Recuperar todas los posts de la BBDD
-    posts = Post.objects.all()
+    posts = Post.objects.select_related("owner").all()
 
     # Comprobamos si se debe filtrar por posts creados por el user autenticado
 
