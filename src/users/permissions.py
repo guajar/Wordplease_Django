@@ -10,10 +10,6 @@ class UserPermission(BasePermission):
         :param view: UsersAPI/UserDetailAPI
         :return: True si puede, False si no puede
         """
-        # cualquiera autenticado puede acceder al detalle para ver, actualizar o borrar
-        if request.user.is_authenticated and view.action in ("retrieve", "uptdate", "destroy"):
-            return True
-
         # si es superusuario y quiere acceder al listado
         if request.user.is_superuser and view.action == "list":
             return True

@@ -15,16 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 
-from blogs.views import PostList, BlogList
-from users.views import logout, LoginView
+from blogs.views import PostList, BlogList, NewPostView
+from users.views import LoginView, LogoutView
 
 urlpatterns = [
+    url(r'^$', PostList.as_view(), name="posts_list"),
     url(r'^admin/', admin.site.urls),
     url(r'^login$', LoginView.as_view(), name="login"),
-    url(r'^logout$', logout, name='logout'),
-    url(r'^$', PostList.as_view(), name="posts_list"),
+    url(r'^logout$', LogoutView.as_view(), name='logout'),
     url(r'^blogs/$', BlogList.as_view(), name="blog_list"),
     url(r'^blogs/(?P<username>[\w.@+-]+)/$', PostList.as_view(), name="posts_list"),
+    url(r'^blogs/new-post/?$', login_required(NewPostView.as_view()), name="new_post"),
     #url(r'^posts/(?P<post_pk>[0-9]+)$', posts_detail, name="posts_detail"),
 ]

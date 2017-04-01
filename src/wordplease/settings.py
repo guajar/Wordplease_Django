@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ui',
     'blogs',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +145,6 @@ LOGGING = {
         }
     }
 }
+
+# Login URL
+LOGIN_URL = '/login'

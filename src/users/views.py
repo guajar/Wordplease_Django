@@ -1,53 +1,36 @@
-from django.contrib.auth import authenticate, login as django_login, logout as django_logout
+from django.contrib.auth import authenticate, login as django_login, login, logout
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
 from django.views import View
+from django.views.generic import RedirectView, FormView
 
 from users.forms import LoginForm
 
 
-class LoginView(View):
+class LoginView(FormView):
+    form_class = LoginForm
+    success_url = reverse_lazy('posts_list')
+    template_name = 'login.html'
 
-    def get(self, request):
-        """
-        Presenta el formulario de login de usuario
-        :param request: HttpRequest
-        :return: HttpResponse
-        """
-        context = {
-            'form': LoginForm()
-        }
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(username=username, password=password)
 
-        return render(request, 'login.html', context)
+        if user is not None and user.is_active:
+            login(self.request, user)
+            return super(LoginView, self).form_valid(form)
+        else:
+            return self.form_invalid(form)
 
-    def post(self, request):
-        """
-        Hace login de un usuario
-        :param request: HttpRequest
-        :return: HttpResponse
-        """
-        form = LoginForm(request.POST)
-        context = dict()  # Iniciamos diccionario
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                # Usuario autenticado
-                django_login(request, user)
-                url = request.GET.get('next', 'tasks_list')
-                return redirect(url)
-            else:
-                # Usuario no autenticado
-                context["error"] = "Wrong username or password"
-        context["form"] = form
-        return render(request, 'login.html', context)
+    def get_success_url(self):
+        return self.request.GET.get('next', reverse('posts_list'))
 
 
-def logout(request):
-    """
-    Hace logout de un usuario
-    :param request: HttpRequest
-    :return: HttpResponse
-    """
-    django_logout(request)
-    return redirect('login')
+class LogoutView(RedirectView):
+    pattern_name = 'login'
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super(LogoutView, self).get(request, *args, **kwargs)
+
