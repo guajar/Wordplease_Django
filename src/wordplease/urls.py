@@ -16,9 +16,15 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from posts.views import posts_list
+from blogs.views import PostList, BlogList
+from users.views import logout, LoginView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', posts_list, name="posts_list"),
+    url(r'^login$', LoginView.as_view(), name="login"),
+    url(r'^logout$', logout, name='logout'),
+    url(r'^$', PostList.as_view(), name="posts_list"),
+    url(r'^blogs/$', BlogList.as_view(), name="blog_list"),
+    url(r'^blogs/(?P<username>[\w.@+-]+)/$', PostList.as_view(), name="posts_list"),
+    #url(r'^posts/(?P<post_pk>[0-9]+)$', posts_detail, name="posts_detail"),
 ]

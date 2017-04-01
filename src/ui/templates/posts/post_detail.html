@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.summary }}</p>
+    <p>{{ post.article }}</p>
+    <ul>
+        <li>
+            <strong>Owner:</strong>
+            {{ post.owner.first_name }} {{ task.owner.last_name }}
+        </li>
+         <li>
+            <strong>Created at:</strong>
+             {% if post.publish_date%}
+                {{ post.publish_date }}
+             {% else %}
+                Unassigned
+             {% endif %}
+        </li>
+    </ul>
+{% endblock %}

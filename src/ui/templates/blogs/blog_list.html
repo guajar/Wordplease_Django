@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table width="100%" border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Blog Title</th>
+                <th>Blog Author</th>
+                <th>Create Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for blog in object_list %}
+                <tr>
+                    <td>
+                        {{ blog.name }}
+                    </td>
+                    <td>
+                        {% if blog.owner %}
+                            {{ blog.owner.first_name }} {{ blog.owner.last_name}}
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if blog.created_at %}
+                            {{ blog.created_at }}
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+                    </td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

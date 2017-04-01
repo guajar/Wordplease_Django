@@ -5,32 +5,32 @@
             <tr>
                 <th>Title</th>
                 <th>Introduction</th>
-                <th>Created at</th>
+                <th>Publish Date</th>
                 <th>Author</th>
             </tr>
         </thead>
         <tbody>
-            {% for post in post_objects %}
+            {% for post in object_list %}
                 <tr>
                     <td>
                         {{ post.title }}
                     </td>
                     <td>
-                        {% if post.intro %}
-                            {{ post.intro }}
+                        {% if post.summary %}
+                            {{ post.summary }}
                         {% else %}
                             Unassigned
                         {% endif %}
                     </td>
                     <td>
-                        {% if post.created_at %}
-                            {{ post.created_at }}
+                        {% if post.publish_date %}
+                            {{ post.publish_date }}
                         {% else %}
                             Unassigned
                         {% endif %}
                     </td>
                     <td>
-                        {{ post.owner.first_name }} {{ post.owner.last_name }}
+                        {{ post.blog.owner.first_name }} {{ post.blog.owner.last_name }}
                     </td>
                     <td></td>
                 </tr>
