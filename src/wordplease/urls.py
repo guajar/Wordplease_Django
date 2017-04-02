@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from blogs.views import PostList, BlogList, NewPostView
+from blogs.views import PostList, BlogList, NewPostView, PostDetail
 from users.views import LoginView, LogoutView
 
 urlpatterns = [
@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'^logout$', LogoutView.as_view(), name='logout'),
     url(r'^blogs/$', BlogList.as_view(), name="blog_list"),
     url(r'^blogs/(?P<username>[\w.@+-]+)/$', PostList.as_view(), name="posts_list"),
+    #url(r'^blogs/(?P<username>[a-zA-Z0-9_]+)/?$', BlogDetail.as_view(), name="blog_detail"),
+    url(r'^blogs/(?P<username>[a-zA-Z0-9_]+)/(?P<pk>[0-9]+)/?$', login_required(PostDetail.as_view()), name="post_detail"),
     url(r'^blogs/new-post/?$', login_required(NewPostView.as_view()), name="new_post"),
     #url(r'^posts/(?P<post_pk>[0-9]+)$', posts_detail, name="posts_detail"),
 ]
